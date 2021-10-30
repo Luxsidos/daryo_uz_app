@@ -5,7 +5,15 @@ import '../../constants.dart';
 
 class MyListTile extends StatelessWidget {
   final VoidCallback voidCallback;
-  const MyListTile({Key? key, required this.voidCallback}) : super(key: key);
+  final String img, title, id, time;
+  const MyListTile({
+    Key? key,
+    required this.voidCallback,
+    required this.img,
+    required this.title,
+    required this.time,
+    required this.id,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +25,18 @@ class MyListTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: getProportionateScreenWidth(100.0),
-              decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: NetworkImage("https://source.unsplash.com/random"),
-                  fit: BoxFit.cover,
+            Hero(
+              tag: id,
+              child: Container(
+                width: getProportionateScreenWidth(100.0),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(img),
+                    fit: BoxFit.cover,
+                  ),
+                  color: kPrimaryExtraColor,
+                  borderRadius: BorderRadius.circular(24.0),
                 ),
-                color: kPrimaryExtraColor,
-                borderRadius: BorderRadius.circular(24.0),
               ),
             ),
             const Spacer(flex: 1),
@@ -36,10 +47,10 @@ class MyListTile extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        "Contact Lost WIth Sriwijaya Air Boeing 737- 500 After Take Off",
-                        style: TextStyle(
+                        title,
+                        style: const TextStyle(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -50,7 +61,7 @@ class MyListTile extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        "30 October 2021",
+                        time,
                         style: TextStyle(
                           fontSize: 10.0,
                           color: kPrimaryExtraColor,
