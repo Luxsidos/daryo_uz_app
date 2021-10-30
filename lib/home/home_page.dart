@@ -1,8 +1,10 @@
 import 'package:daryo_uz_app/constants.dart';
+import 'package:daryo_uz_app/details/details_page.dart';
 import 'package:daryo_uz_app/home/components/my_list_tile.dart';
 import 'package:daryo_uz_app/size_config.dart';
 import 'package:daryo_uz_app/widgets/main_title.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatelessWidget {
@@ -36,7 +38,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const MainTitle(),
+                    const MainTitle(isMenu: true),
                   ],
                 ),
               ),
@@ -48,7 +50,12 @@ class HomePage extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return const MyListTile();
+                    return MyListTile(
+                      voidCallback: () => Get.to(
+                        const DetailsPage(),
+                        transition: Transition.cupertino,
+                      ),
+                    );
                   },
                 ),
               ),

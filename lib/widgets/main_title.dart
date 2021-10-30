@@ -3,23 +3,26 @@ import 'package:daryo_uz_app/size_config.dart';
 import 'package:flutter/material.dart';
 
 class MainTitle extends StatelessWidget {
-  const MainTitle({Key? key}) : super(key: key);
+  final bool isMenu;
+  const MainTitle({Key? key, required this.isMenu}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: getProportionateScreenHeight(260.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24.0),
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(1.0, 4.0),
-            blurRadius: 30.0,
-            color: Colors.blue.shade800.withOpacity(0.1),
-          )
-        ],
-      ),
+      decoration: isMenu
+          ? BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24.0),
+              boxShadow: [
+                BoxShadow(
+                  offset: const Offset(1.0, 4.0),
+                  blurRadius: 30.0,
+                  color: Colors.blue.shade800.withOpacity(0.1),
+                )
+              ],
+            )
+          : null,
       child: Column(
         children: [
           Expanded(
@@ -36,7 +39,7 @@ class MainTitle extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenWidth(14.0),
+              horizontal: getProportionateScreenWidth(isMenu ? 14.0 : 0.0),
               vertical: getProportionateScreenHeight(16.0),
             ),
             child: Column(
