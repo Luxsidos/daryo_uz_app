@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           bodyText2: GoogleFonts.comfortaa(color: kPrimaryColor),
         ),
       ),
-      home: const HomePage(),
+      home:  HomePage(),
     );
   }
 }

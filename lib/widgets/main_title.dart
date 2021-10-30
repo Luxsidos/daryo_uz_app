@@ -54,9 +54,11 @@ class MainTitle extends StatelessWidget {
               child: Hero(
                 tag: id,
                 child: Container(
-                  height: getProportionateScreenHeight(170.0),
+                  height: getProportionateScreenHeight(200.0),
                   decoration: BoxDecoration(
+                    
                     image: DecorationImage(
+                      alignment: Alignment.topCenter,
                       image: NetworkImage(img),
                       fit: BoxFit.cover,
                     ),

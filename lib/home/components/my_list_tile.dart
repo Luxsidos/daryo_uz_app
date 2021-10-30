@@ -31,6 +31,7 @@ class MyListTile extends StatelessWidget {
                 width: getProportionateScreenWidth(100.0),
                 decoration: BoxDecoration(
                   image: DecorationImage(
+                    alignment: Alignment.topCenter,
                     image: NetworkImage(img),
                     fit: BoxFit.cover,
                   ),
