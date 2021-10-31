@@ -18,19 +18,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentPage = 1;
-
   List<News> news = [];
 
-  int isRefresh = 2;
+  bool isRefresh = true;
+  bool isNew = true;
+  int currentPage = 1;
 
   Future<List<News>> getData() async {
     try {
-      if (isRefresh == 2) {
-        print("SALOM 000");
-        currentPage = 1;
-      }
-
       var response = await Dio().get(
           "https://admin.daryo.uz/wp-json/wp/v2/posts?page=${currentPage}");
 
@@ -39,12 +34,12 @@ class _HomePageState extends State<HomePage> {
 
       currentPage += 1;
 
-      if (isRefresh == 2) {
-        print("SALOM 222");
+      if (isNew) {
         news = jsonData;
-      } else if (isRefresh == 1) {
-        print("SALOM 111");
+        isNew = false;
+      } else if (!isRefresh) {
         news.addAll(jsonData);
+        isRefresh = true;
       }
 
       setState(() {});
@@ -61,7 +56,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            isRefresh = 2;
+            isRefresh = true;
             await Future.delayed(const Duration(microseconds: 100));
             setState(() {});
           },
@@ -71,10 +66,17 @@ class _HomePageState extends State<HomePage> {
               if (snapshot.hasData) {
                 List<News> data = snapshot.data!;
                 var htmlData = parse(data[0].content!.rendered);
-
-                var img = "http:" +
-                    (htmlData.getElementsByTagName("img")[0].attributes['src'])
-                        .toString();
+                String? img;
+                try {
+                  img = "http:" +
+                      (htmlData
+                              .getElementsByTagName("img")[0]
+                              .attributes['src'])
+                          .toString();
+                } catch (e) {
+                  img =
+                      "https://webhostingmedia.net/wp-content/uploads/2018/01/http-error-404-not-found.png";
+                }
 
                 DateTime dateData = data[0].modifiedGmt!;
                 String time =
@@ -159,10 +161,8 @@ class _HomePageState extends State<HomePage> {
                         [
                           ElevatedButton(
                             onPressed: () async {
-                              isRefresh = 1;
-                              await Future.delayed(const Duration(microseconds: 100));
+                              isRefresh = false;
                               setState(() {});
-                              isRefresh = 0;
                             },
                             style: ElevatedButton.styleFrom(
                                 primary: kPrimaryColor),
