@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "987049770383",
+    "project_id": "daryo-uz-app-login",
+    "storage_bucket": "daryo-uz-app-login.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987049770383:android:3ab7e025d94ed6a4f61ffa",
+        "android_client_info": {
+          "package_name": "com.luxsidos.daryouz.daryo_uz_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "987049770383-9q9n9eotk7p1jqk99m2hsh2afp23dl69.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.luxsidos.daryouz.daryo_uz_app",
+            "certificate_hash": "18690dfadab08ae5668f9557a3621375f24d62b5"
+          }
+        },
+        {
+          "client_id": "987049770383-rp54psotgnvrlgsrjadqkeou16qq7p69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOUUgFgLo-bvnmY9UqJDIPtD6Gy8ktKGc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987049770383-rp54psotgnvrlgsrjadqkeou16qq7p69.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

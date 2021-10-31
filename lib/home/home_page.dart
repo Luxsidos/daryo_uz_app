@@ -1,3 +1,4 @@
+import 'package:daryo_uz_app/auth/login_page.dart';
 import 'package:daryo_uz_app/constants.dart';
 import 'package:daryo_uz_app/details/details_page.dart';
 import 'package:daryo_uz_app/home/components/my_list_tile.dart';
@@ -5,6 +6,8 @@ import 'package:daryo_uz_app/models/news_model.dart';
 import 'package:daryo_uz_app/size_config.dart';
 import 'package:daryo_uz_app/widgets/main_title.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +19,8 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
+FirebaseAuth _authUser = FirebaseAuth.instance;
 
 class _HomePageState extends State<HomePage> {
   List<News> news = [];
@@ -55,9 +60,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
+          color: kPrimaryColor,
           onRefresh: () async {
             isRefresh = true;
-            await Future.delayed(const Duration(microseconds: 100));
             setState(() {});
           },
           child: FutureBuilder<List<News>>(
@@ -83,6 +88,7 @@ class _HomePageState extends State<HomePage> {
                     "${dateData.day}/${dateData.month}/${dateData.year} ${dateData.hour}:${dateData.minute}";
 
                 return CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
                   slivers: [
                     SliverPadding(
                       padding: EdgeInsets.symmetric(
@@ -93,15 +99,43 @@ class _HomePageState extends State<HomePage> {
                           [
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                vertical: getProportionateScreenHeight(18.0),
+                                vertical: getProportionateScreenHeight(16.0),
                               ),
-                              child: Text(
-                                "Daryo uz",
-                                style: GoogleFonts.comfortaa(
-                                  color: kPrimaryColor,
-                                  fontSize: 32.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Daryo uz",
+                                      style: GoogleFonts.comfortaa(
+                                        color: kPrimaryColor,
+                                        fontSize: 32.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.logout,
+                                      color: kPrimaryColor,
+                                    ),
+                                    onPressed: () async {
+                                      try {
+                                        await _authUser.signOut();
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            CupertinoPageRoute(
+                                                builder: (context) =>
+                                                    const LoginPage()),
+                                            (route) => true);
+                                      } catch (e) {
+                                        Get.snackbar(
+                                          "Error",
+                                          "Try again!",
+                                        );
+                                      }
+                                    },
+                                  )
+                                ],
                               ),
                             ),
                             MainTitle(
